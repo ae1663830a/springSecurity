@@ -1,23 +1,24 @@
 package lt.aejavap.security.authapp.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Data
-@EqualsAndHashCode
+@Getter
+@Setter
+//@Data
+//@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "USER")
 public class User implements Serializable {
+
+    private static final long serialVersionUID = -2749854678606598488L;
 
     @Id
     @Column(name = "username", unique = true)
@@ -25,4 +26,17 @@ public class User implements Serializable {
 
     @Column(name = "password")
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<AccountRole> roles = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
 }
