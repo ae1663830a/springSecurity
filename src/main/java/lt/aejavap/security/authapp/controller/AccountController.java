@@ -23,7 +23,7 @@ public class AccountController {
     @PreAuthorize("hasRole('ROLE_MASTER')")
     public UserDetails getAuthUserInfo() {
         Authentication authUser = SecurityContextHolder.getContext().getAuthentication();
-        LOGGER.debug("Returning info of {} with '{}' roles", authUser.getName(), authUser.getAuthorities());
+        LOGGER.debug("Returning info of user '{}' with '{}' roles", authUser.getName(), authUser.getAuthorities());
         return accountService.loadUserByUsername(authUser.getName());
     }
 
